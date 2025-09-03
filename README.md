@@ -2,7 +2,7 @@
 
 This web application provides a personalized fortune analysis based on user-provided information, powered by the Google Gemini API. It analyzes a user's name, date of birth, optional time of birth, and an optional face photo to generate insights across eight different life categories. The results are presented in a beautiful and interactive interface featuring flippable cards and a detailed modal view.
 
-![AI Fortune Teller Screenshot](./image.png)
+![AI Fortune Teller Screenshot](https://storage.googleapis.com/aistudio-hosting/generative-ai-samples/public/github-readme-assets/fortune-teller.png)
 
 ## ✨ Key Features
 
@@ -16,7 +16,7 @@ This web application provides a personalized fortune analysis based on user-prov
 
 ## 🚀 How to Run Locally
 
-This project uses modern JavaScript (TypeScript and React) and requires an environment variable to handle the Google Gemini API key securely. The following instructions guide you on setting up a local development environment using [Vite](https://vitejs.dev/) to run the application.
+This project is set up as a standard Vite application, making it easy to run locally.
 
 ### Prerequisites
 
@@ -36,9 +36,9 @@ cd ai-fortune-analysis
 
 ### Step 2: Configure Your API Key
 
-The application is designed to read the API key from environment variables for security.
+The application reads the API key from an environment variable for security.
 
-1.  In the root of the project directory you just cloned, create a new file named `.env.local`.
+1.  In the root of the project directory, create a new file named `.env.local`.
 2.  Add your API key to this file as follows:
 
     ```
@@ -47,61 +47,15 @@ The application is designed to read the API key from environment variables for s
 
     *Replace `YOUR_API_KEY_HERE` with your actual Gemini API key.*
 
-### Step 3: Set Up the Project
+### Step 3: Install Dependencies
 
-We will use `npm` to install a simple development server and its dependencies.
+Install the project dependencies using `npm`.
 
-1.  Initialize a `package.json` file to manage dependencies:
-    ```bash
-    npm init -y
-    ```
-2.  Install Vite and the React plugin:
-    ```bash
-    npm install --save-dev vite @vitejs/plugin-react
-    ```
-3.  Add a `dev` script to your `package.json` file for convenience. Open the file and add the `"scripts"` section:
-    ```json
-    {
-      "name": "ai-fortune-analysis",
-      "private": true,
-      "version": "1.0.0",
-      "scripts": {
-        "dev": "vite"
-      },
-      "devDependencies": {
-        "@vitejs/plugin-react": "^4.2.1",
-        "vite": "^5.2.0"
-      }
-    }
-    ```
-    *(Note: Your installed package versions might be slightly different).*
+```bash
+npm install
+```
 
-### Step 4: Create Vite Configuration
-
-The application code expects the API key at `process.env.API_KEY`. We need to configure Vite to provide this variable from the `.env.local` file you created.
-
-1.  Create a file named `vite.config.js` in the project root.
-2.  Add the following configuration to it. This tells Vite to expose your key to the application in the expected format.
-
-    ```javascript
-    import { defineConfig, loadEnv } from 'vite';
-    import react from '@vitejs/plugin-react';
-
-    export default defineConfig(({ mode }) => {
-      // Load env file based on `mode` in the current working directory.
-      const env = loadEnv(mode, process.cwd(), '');
-      return {
-        plugins: [react()],
-        // This makes the VITE_GEMINI_API_KEY from your .env file
-        // available as process.env.API_KEY in your app.
-        define: {
-          'process.env.API_KEY': JSON.stringify(env.VITE_GEMINI_API_KEY),
-        },
-      };
-    });
-    ```
-
-### Step 5: Launch the App
+### Step 4: Launch the App
 
 Now you are ready to run the application.
 
@@ -116,23 +70,27 @@ Now you are ready to run the application.
 
 ```
 .
-├── components/          # Reusable React components
-│   ├── DetailModal.tsx      # Modal for displaying detailed analysis
-│   ├── FortuneCard.tsx      # Flippable card for each category summary
-│   ├── GenerationProgress.tsx # UI for showing analysis progress
-│   ├── Header.tsx           # App header with language selector
-│   ├── icons.tsx            # SVG icons for categories
-│   └── InputForm.tsx        # Form for user data input
-├── contexts/            # React Context for global state
-│   └── LanguageContext.tsx  # Manages locale and translations
-├── services/            # Modules for external interactions
-│   └── geminiService.ts     # Handles all calls to the Gemini API
-├── App.tsx              # Main application component, manages state and pages
-├── index.html           # The main HTML file
-├── index.tsx            # Entry point for the React application
-├── locales.ts           # Contains all UI translations and category definitions
-├── types.ts             # TypeScript type definitions
-└── README.md            # You are here!
+├── .gitignore
+├── index.html
+├── metadata.json
+├── package.json
+├── README.md
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── src/
+    ├── App.tsx
+    ├── index.tsx
+    ├── locales.ts
+    ├── types.ts
+    ├── components/
+    │   ├── DetailModal.tsx
+    │   ├── FortuneCard.tsx
+    │   └── ...
+    ├── contexts/
+    │   └── LanguageContext.tsx
+    └── services/
+        └── geminiService.ts
 ```
 
 ## 🧠 How It Works
