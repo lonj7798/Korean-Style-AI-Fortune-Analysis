@@ -2,7 +2,7 @@
 
 This web application provides a personalized fortune analysis based on user-provided information, powered by the Google Gemini API. It analyzes a user's name, date of birth, optional time of birth, and an optional face photo to generate insights across eight different life categories. The results are presented in a beautiful and interactive interface featuring flippable cards and a detailed modal view.
 
-![AI Fortune Teller Screenshot](https://storage.googleapis.com/aistudio-hosting/generative-ai-samples/public/github-readme-assets/fortune-teller.png)
+![AI Fortune Teller Screenshot](./image.png)
 
 ## ✨ Key Features
 
