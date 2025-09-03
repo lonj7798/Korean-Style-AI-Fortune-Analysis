@@ -14,26 +14,103 @@ This web application provides a personalized fortune analysis based on user-prov
 -   **Modern & Responsive Design**: Built with Tailwind CSS for a sleek, mobile-first experience that looks great on any device.
 -   **Powered by Google Gemini**: Leverages the advanced capabilities of the `gemini-2.5-flash` model for high-quality, structured JSON output.
 
-## 🚀 Tech Stack
+## 🚀 How to Run Locally
 
--   **Frontend**: [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
--   **AI Model**: Google Gemini API ([@google/genai](https://www.npmjs.com/package/@google/genai))
--   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
--   **Language Management**: React Context API
-
-## ⚙️ Getting Started
+This project uses modern JavaScript (TypeScript and React) and requires an environment variable to handle the Google Gemini API key securely. The following instructions guide you on setting up a local development environment using [Vite](https://vitejs.dev/) to run the application.
 
 ### Prerequisites
 
--   A modern web browser.
--   A Google Gemini API Key. You can get one from [Google AI Studio](https://aistudio.google.com/app/apikey).
+-   [Git](https://git-scm.com/) for cloning the repository.
+-   [Node.js](https://nodejs.org/) (version 18 or higher), which includes `npm`.
+-   A Google Gemini API Key. You can get one for free from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
-### Running the Application
+### Step 1: Clone the Repository
 
-This project is designed to run in a web-based development environment where the Gemini API key is securely managed as an environment variable (`process.env.API_KEY`).
+First, clone this repository to your local machine using git.
 
-1.  **Provide API Key**: Ensure the `API_KEY` environment variable is set in your deployment or development environment.
-2.  **Open `index.html`**: The application will start, and the necessary scripts will be imported via the import map.
+```bash
+# Replace the URL with the actual repository URL
+git clone https://github.com/your-username/ai-fortune-analysis.git
+cd ai-fortune-analysis
+```
+
+### Step 2: Configure Your API Key
+
+The application is designed to read the API key from environment variables for security.
+
+1.  In the root of the project directory you just cloned, create a new file named `.env.local`.
+2.  Add your API key to this file as follows:
+
+    ```
+    VITE_GEMINI_API_KEY="YOUR_API_KEY_HERE"
+    ```
+
+    *Replace `YOUR_API_KEY_HERE` with your actual Gemini API key.*
+
+### Step 3: Set Up the Project
+
+We will use `npm` to install a simple development server and its dependencies.
+
+1.  Initialize a `package.json` file to manage dependencies:
+    ```bash
+    npm init -y
+    ```
+2.  Install Vite and the React plugin:
+    ```bash
+    npm install --save-dev vite @vitejs/plugin-react
+    ```
+3.  Add a `dev` script to your `package.json` file for convenience. Open the file and add the `"scripts"` section:
+    ```json
+    {
+      "name": "ai-fortune-analysis",
+      "private": true,
+      "version": "1.0.0",
+      "scripts": {
+        "dev": "vite"
+      },
+      "devDependencies": {
+        "@vitejs/plugin-react": "^4.2.1",
+        "vite": "^5.2.0"
+      }
+    }
+    ```
+    *(Note: Your installed package versions might be slightly different).*
+
+### Step 4: Create Vite Configuration
+
+The application code expects the API key at `process.env.API_KEY`. We need to configure Vite to provide this variable from the `.env.local` file you created.
+
+1.  Create a file named `vite.config.js` in the project root.
+2.  Add the following configuration to it. This tells Vite to expose your key to the application in the expected format.
+
+    ```javascript
+    import { defineConfig, loadEnv } from 'vite';
+    import react from '@vitejs/plugin-react';
+
+    export default defineConfig(({ mode }) => {
+      // Load env file based on `mode` in the current working directory.
+      const env = loadEnv(mode, process.cwd(), '');
+      return {
+        plugins: [react()],
+        // This makes the VITE_GEMINI_API_KEY from your .env file
+        // available as process.env.API_KEY in your app.
+        define: {
+          'process.env.API_KEY': JSON.stringify(env.VITE_GEMINI_API_KEY),
+        },
+      };
+    });
+    ```
+
+### Step 5: Launch the App
+
+Now you are ready to run the application.
+
+1.  Execute the following command in your terminal:
+    ```bash
+    npm run dev
+    ```
+2.  Vite will start the server and print a local URL (e.g., `http://localhost:5173`).
+3.  Open this URL in your web browser to use the AI Fortune Analysis app.
 
 ## 📂 Project Structure
 
